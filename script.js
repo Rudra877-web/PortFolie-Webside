@@ -30,6 +30,27 @@ document.querySelectorAll('a, button').forEach(el => {
   });
 });
 
+// ── HAMBURGER MENU ─────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+
+function closeNav() {
+  hamburger.classList.remove('open');
+  navLinks.classList.remove('open');
+}
+
+// Close nav on outside click
+document.addEventListener('click', e => {
+  if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+    closeNav();
+  }
+});
+
 // ── SCROLL REVEAL ───────────────────────────────────────────
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -38,7 +59,7 @@ const observer = new IntersectionObserver(entries => {
       e.target.style.transform = 'translateY(0)';
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 
 document.querySelectorAll('section').forEach(s => {
   s.style.opacity    = '0';
