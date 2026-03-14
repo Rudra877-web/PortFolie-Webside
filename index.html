@@ -5,17 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RP | Full Stack Developer</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="cursor"></div>
+<!-- SCROLL PROGRESS -->
+<div id="scrollProgress"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo">
+      <span class="loader-r">R</span><span class="loader-p">P</span>
+    </div>
+    <div class="loader-bar-wrap"><div class="loader-bar-fill" id="loaderBar"></div></div>
+    <div class="loader-percent" id="loaderPercent">0%</div>
+  </div>
+</div>
+
+<!-- CURSOR -->
+<div id="cursor"><div class="cursor-dot"></div></div>
 <div id="cursorRing"></div>
+<div id="cursorText"></div>
 
 <!-- NAV -->
-<nav>
-  <a href="#hero" class="nav-logo">RUDRA.DEV</a>
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">
+    <span class="nl-r">R</span><span class="nl-p">P</span><span class="nl-dot">.</span>
+  </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#about"      onclick="closeNav()">About</a></li>
     <li><a href="#skills"     onclick="closeNav()">Skills</a></li>
@@ -24,344 +42,304 @@
     <li><a href="#resume"     onclick="closeNav()">Resume</a></li>
     <li><a href="#contact"    onclick="closeNav()">Contact</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-noise"></div>
+
   <div class="hero-left">
     <div class="hero-tag">
-      <div class="dot"></div>
-      Available for opportunities
+      <span class="tag-dot"></span>
+      <span class="tag-text">Available for opportunities</span>
     </div>
-    <h1 class="hero-name">
-      RUDRA<br>
-      <span class="outline">PANCHAL</span>
-    </h1>
-    <p class="hero-desc">
-      <strong>Full Stack Web Developer</strong> crafting modern, responsive apps with React, Node.js &amp; PostgreSQL.
-    </p>
+
+    <div class="hero-name-wrap">
+      <h1 class="hero-name" id="heroName">
+        <span class="hn-line" data-text="RUDRA">RUDRA</span>
+        <span class="hn-line outline" data-text="PANCHAL">PANCHAL</span>
+      </h1>
+    </div>
+
+    <div class="hero-role">
+      <span class="role-prefix">&lt;</span>
+      <span id="typed"></span>
+      <span class="role-suffix">/&gt;</span>
+    </div>
+
+    <p class="hero-desc">Crafting <strong>digital experiences</strong> that matter — from pixel-perfect frontends to robust backends.</p>
+
     <div class="hero-cta">
-      <a href="#software" class="btn-primary">View Projects →</a>
-      <a href="#contact"  class="btn-secondary">Get In Touch</a>
+      <a href="#software" class="btn-primary magnetic" data-cursor="EXPLORE">
+        <span class="btn-bg"></span>
+        <span class="btn-text">View Projects</span>
+        <span class="btn-arrow">→</span>
+      </a>
+      <a href="#contact" class="btn-ghost magnetic" data-cursor="CONNECT">
+        Get In Touch
+      </a>
     </div>
   </div>
 
   <div class="hero-right">
     <div class="hero-stats">
-      <div class="stat-card">
-        <div class="stat-num">2</div>
+      <div class="stat-card magnetic">
+        <div class="stat-glow"></div>
+        <div class="stat-num count-up" data-val="2" data-suffix="">0</div>
         <div class="stat-label">Internships</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num">5+</div>
+      <div class="stat-card magnetic">
+        <div class="stat-glow"></div>
+        <div class="stat-num count-up" data-val="5" data-suffix="+">0+</div>
         <div class="stat-label">Projects</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card magnetic">
+        <div class="stat-glow"></div>
         <div class="stat-num">6th</div>
         <div class="stat-label">Semester</div>
       </div>
     </div>
+
+    <div class="hero-badge">
+      <div class="badge-ring"></div>
+      <div class="badge-inner">
+        <span class="badge-icon">⚡</span>
+        <span class="badge-text">FULL STACK</span>
+        <span class="badge-sub">DEVELOPER</span>
+      </div>
+    </div>
   </div>
 
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    Scroll
+  <div class="hero-scroll-hint">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+    <span>SCROLL</span>
   </div>
 </section>
 
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>React.js</span><span>•</span><span>Node.js</span><span>•</span><span>PostgreSQL</span><span>•</span><span>Express.js</span><span>•</span><span>TypeORM</span><span>•</span><span>REST API</span><span>•</span><span>JavaScript</span><span>•</span><span>IoT</span><span>•</span><span>Git</span><span>•</span>
+    <span>React.js</span><span>•</span><span>Node.js</span><span>•</span><span>PostgreSQL</span><span>•</span><span>Express.js</span><span>•</span><span>TypeORM</span><span>•</span><span>REST API</span><span>•</span><span>JavaScript</span><span>•</span><span>IoT</span><span>•</span><span>Git</span><span>•</span>
+  </div>
+</div>
+
 <!-- ABOUT -->
-<section id="about">
-  <div class="section-eyebrow"><span></span>01 — Who I Am</div>
-  <h2 class="section-title">About <em>Me</em></h2>
+<section id="about" class="s-dark">
+  <div class="s-label reveal"><span></span>01 / ABOUT</div>
+  <h2 class="s-title reveal">WHO <em>AM</em> I<span class="s-dot">.</span></h2>
   <div class="about-wrap">
-    <div class="about-photo-wrap">
-      <img src="rudra.jpeg" alt="Rudra Panchal" class="about-photo">
-      <div class="about-photo-overlay"></div>
-      <div class="about-photo-tag">
-        <strong>Rudra Panchal</strong>
-        Full Stack Developer
+    <div class="about-photo-col reveal">
+      <div class="photo-frame">
+        <div class="photo-corner tl"></div>
+        <div class="photo-corner tr"></div>
+        <div class="photo-corner bl"></div>
+        <div class="photo-corner br"></div>
+        <img src="rudra.jpeg" alt="Rudra Panchal" class="about-photo">
+        <div class="photo-scan"></div>
+        <div class="photo-overlay"></div>
+        <div class="photo-caption">
+          <span class="pc-name">RUDRA PANCHAL</span>
+          <span class="pc-role">Full Stack Developer</span>
+        </div>
       </div>
     </div>
-    <div class="about-right">
-      <p class="about-bio">
-        I'm a <strong>passionate Full Stack Web Developer</strong> pursuing a Diploma in Computer Engineering (6th Semester) at <strong>Shree Swaminarayan Polytechnic</strong>.<br><br>
-        I have hands-on experience developing modern and responsive web applications using <strong>React JS, Node.js, Express, and PostgreSQL</strong>. I've completed <strong>two internships</strong> at Light Micro Finance Company, working on real-time projects and learning industry standards.<br><br>
-        I'm dedicated, self-motivated, and always eager to explore new technologies.
-      </p>
-      <div class="info-grid">
-        <div class="info-cell">
-          <div class="info-k">Location</div>
-          <div class="info-v">Ahmedabad, Gujarat</div>
-        </div>
-        <div class="info-cell">
-          <div class="info-k">Date of Birth</div>
-          <div class="info-v">08 / 11 / 2007</div>
-        </div>
-        <div class="info-cell">
-          <div class="info-k">Languages</div>
-          <div class="info-v">English, Hindi</div>
-        </div>
-        <div class="info-cell">
-          <div class="info-k">Email</div>
-          <div class="info-v">panchalrudra04492&#64;gmail.com</div>
-        </div>
-        <div class="info-cell">
-          <div class="info-k">Phone</div>
-          <div class="info-v">+91 63522 73970</div>
-        </div>
-        <div class="info-cell">
-          <div class="info-k">Gender</div>
-          <div class="info-v">Male</div>
-        </div>
+    <div class="about-content">
+      <p class="about-bio reveal">I'm a <strong>passionate Full Stack Web Developer</strong> pursuing a Diploma in Computer Engineering (6th Semester) at <strong>Shree Swaminarayan Polytechnic</strong>.<br><br>Hands-on experience with <strong>React JS, Node.js, Express, and PostgreSQL</strong>. Completed <strong>two internships</strong> at Light Micro Finance Company on real-time production projects.<br><br>Self-motivated, always hungry to learn and build things that matter.</p>
+      <div class="info-cards stagger">
+        <div class="info-card reveal"><span class="ic-label">📍 Location</span><span class="ic-val">Ahmedabad, Gujarat</span></div>
+        <div class="info-card reveal"><span class="ic-label">🎂 Born</span><span class="ic-val">08 / 11 / 2007</span></div>
+        <div class="info-card reveal"><span class="ic-label">🌐 Languages</span><span class="ic-val">English, Hindi</span></div>
+        <div class="info-card reveal"><span class="ic-label">📧 Email</span><span class="ic-val">panchalrudra04492&#64;gmail.com</span></div>
+        <div class="info-card reveal"><span class="ic-label">📱 Phone</span><span class="ic-val">+91 63522 73970</span></div>
+        <div class="info-card reveal"><span class="ic-label">👤 Gender</span><span class="ic-val">Male</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills">
-  <div class="section-eyebrow"><span></span>02 — What I Know</div>
-  <h2 class="section-title">Technical <em>Skills</em></h2>
-  <div class="skills-wrap">
-    <div class="skill-block">
-      <div class="skill-icon">🖥️</div>
-      <div class="skill-cat">Frontend</div>
-      <div class="skill-tags">
-        <span class="skill-tag">HTML</span>
-        <span class="skill-tag">CSS</span>
-        <span class="skill-tag">JavaScript</span>
-        <span class="skill-tag">React.js</span>
-        <span class="skill-tag">Responsive Design</span>
-      </div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">⚙️</div>
-      <div class="skill-cat">Backend</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Node.js</span>
-        <span class="skill-tag">Express.js</span>
-        <span class="skill-tag">REST API</span>
-        <span class="skill-tag">Authentication</span>
-      </div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🗄️</div>
-      <div class="skill-cat">Database</div>
-      <div class="skill-tags">
-        <span class="skill-tag">PostgreSQL</span>
-        <span class="skill-tag">TypeORM</span>
-        <span class="skill-tag">MySQL</span>
-        <span class="skill-tag">RDBMS</span>
-      </div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">💻</div>
-      <div class="skill-cat">Languages</div>
-      <div class="skill-tags">
-        <span class="skill-tag">C</span>
-        <span class="skill-tag">C++</span>
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">Java</span>
-      </div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🛠️</div>
-      <div class="skill-cat">Tools</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">GitHub</span>
-        <span class="skill-tag">Postman</span>
-        <span class="skill-tag">VS Code</span>
-      </div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🧠</div>
-      <div class="skill-cat">CS Fundamentals</div>
-      <div class="skill-tags">
-        <span class="skill-tag">DSA</span>
-        <span class="skill-tag">RDBMS</span>
-        <span class="skill-tag">OOP</span>
-      </div>
-    </div>
+<section id="skills" class="s-light">
+  <div class="s-label reveal"><span></span>02 / SKILLS</div>
+  <h2 class="s-title reveal">TECH <em>STACK</em><span class="s-dot">.</span></h2>
+  <div class="skills-grid stagger">
+    <div class="sk-card tilt reveal" data-color="#4f8ef7"><div class="sk-icon">🖥️</div><div class="sk-name">Frontend</div><div class="sk-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React.js</span><span>Responsive</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#06b6d4"><div class="sk-icon">⚙️</div><div class="sk-name">Backend</div><div class="sk-tags"><span>Node.js</span><span>Express.js</span><span>REST API</span><span>Auth</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#8b5cf6"><div class="sk-icon">🗄️</div><div class="sk-name">Database</div><div class="sk-tags"><span>PostgreSQL</span><span>TypeORM</span><span>MySQL</span><span>RDBMS</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#f59e0b"><div class="sk-icon">💻</div><div class="sk-name">Languages</div><div class="sk-tags"><span>C</span><span>C++</span><span>Python</span><span>Java</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#10b981"><div class="sk-icon">🛠️</div><div class="sk-name">Tools</div><div class="sk-tags"><span>Git</span><span>GitHub</span><span>Postman</span><span>VS Code</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#f43f5e"><div class="sk-icon">🧠</div><div class="sk-name">CS Fundamentals</div><div class="sk-tags"><span>DSA</span><span>RDBMS</span><span>OOP</span></div><div class="sk-glow"></div></div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-eyebrow"><span></span>03 — Work History</div>
-  <h2 class="section-title">Work <em>Experience</em></h2>
-  <div class="exp-timeline">
-    <div class="exp-item">
-      <div class="exp-meta">
-        <div class="exp-type">Internship</div>
-        <div class="exp-period">May 2025 — Jul 2025</div>
-      </div>
-      <div class="exp-content">
-        <div class="exp-role">Web Development Intern</div>
-        <div class="exp-company">Light Micro Finance Company</div>
-        <div class="exp-stipend">💰 Paid Internship &nbsp;·&nbsp; Stipend Provided</div>
+<section id="experience" class="s-dark">
+  <div class="s-label reveal"><span></span>03 / EXPERIENCE</div>
+  <h2 class="s-title reveal">WORK <em>HISTORY</em><span class="s-dot">.</span></h2>
+  <div class="exp-block reveal">
+    <div class="exp-left">
+      <div class="exp-badge">INTERNSHIP</div>
+      <div class="exp-period">MAY 2025<br>—<br>JUL 2025</div>
+      <div class="exp-line"><div class="exp-line-fill"></div></div>
+    </div>
+    <div class="exp-right">
+      <div class="exp-card tilt">
+        <div class="exp-glow"></div>
+        <div class="exp-header">
+          <div>
+            <h3 class="exp-role">Web Development Intern</h3>
+            <div class="exp-company">⚡ Light Micro Finance Company</div>
+          </div>
+          <div class="exp-stipend-badge">💰 Stipend</div>
+        </div>
         <ul class="exp-list">
-          <li>Developed full-stack web applications using React.js, Node.js, Express.js, and PostgreSQL.</li>
-          <li>Built RESTful APIs and integrated them with the frontend seamlessly.</li>
-          <li>Implemented secure login, registration, and user authentication modules.</li>
-          <li>Created admin dashboards and faculty management systems.</li>
-          <li>Worked on deployment and bug fixing for live production projects.</li>
+          <li><span class="eli">//</span>Developed full-stack web apps with React.js, Node.js, Express.js &amp; PostgreSQL.</li>
+          <li><span class="eli">//</span>Built RESTful APIs and integrated with frontend seamlessly.</li>
+          <li><span class="eli">//</span>Implemented secure login, registration &amp; authentication modules.</li>
+          <li><span class="eli">//</span>Created admin dashboards and faculty management systems.</li>
+          <li><span class="eli">//</span>Worked on deployment and bug fixing for live production projects.</li>
         </ul>
+        <div class="exp-tags"><span>React.js</span><span>Node.js</span><span>PostgreSQL</span><span>Express</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- EDUCATION -->
-<section id="education">
-  <div class="section-eyebrow"><span></span>04 — Academic Background</div>
-  <h2 class="section-title">My <em>Education</em></h2>
-  <div class="edu-wrap">
-    <div class="edu-card">
+<section id="education" class="s-light">
+  <div class="s-label reveal"><span></span>04 / EDUCATION</div>
+  <h2 class="s-title reveal">ACADEMIC <em>JOURNEY</em><span class="s-dot">.</span></h2>
+  <div class="edu-cards stagger">
+    <div class="edu-card tilt reveal">
       <div class="edu-num">01</div>
-      <div class="edu-icon">🎓</div>
+      <div class="edu-icon-big">🎓</div>
       <div class="edu-degree">Diploma in Computer Engineering</div>
       <div class="edu-school">Shree Swaminarayan Polytechnic, Gandhinagar</div>
-      <span class="edu-pill">2023 — Present · 6th Semester</span>
+      <div class="edu-year">2023 — Present · 6th Semester</div>
+      <div class="edu-glow"></div>
     </div>
-    <div class="edu-card">
+    <div class="edu-card tilt reveal">
       <div class="edu-num">02</div>
-      <div class="edu-icon">📚</div>
+      <div class="edu-icon-big">📚</div>
       <div class="edu-degree">SSC — 10th Standard</div>
       <div class="edu-school">Gujarat Secondary Education Board (GSEB)</div>
-      <span class="edu-pill">Completed 2023</span>
+      <div class="edu-year">Completed 2023</div>
+      <div class="edu-glow"></div>
     </div>
   </div>
 </section>
 
-<!-- SOFTWARE PROJECTS -->
-<section id="software">
-  <div class="section-eyebrow"><span></span>05 — Software Projects</div>
-  <h2 class="section-title">Software <em>Projects</em></h2>
-  <div class="projects-wrap">
-
-    <div class="proj-card">
-      <div class="proj-index">PROJECT / 01</div>
-      <div class="proj-name">College Management System</div>
-      <p class="proj-desc">Full-stack system with Admin &amp; Student Dashboards, Faculty Management, Courses, Admission Form, and Fee Payment.</p>
-      <div class="proj-stack">
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">Node.js</span>
-        <span class="proj-tag">Express</span>
-        <span class="proj-tag">PostgreSQL</span>
-        <span class="proj-tag">TypeORM</span>
-      </div>
-      <span class="proj-link-soon">🔗 Link coming soon...</span>
+<!-- PROJECTS -->
+<section id="software" class="s-dark">
+  <div class="s-label reveal"><span></span>05 / PROJECTS</div>
+  <h2 class="s-title reveal">SOFTWARE <em>WORK</em><span class="s-dot">.</span></h2>
+  <div class="proj-grid stagger">
+    <div class="proj-card tilt reveal">
+      <div class="proj-num">01</div>
+      <div class="proj-glow"></div>
+      <h3 class="proj-name">College Management System</h3>
+      <p class="proj-desc">Full-stack system — Admin &amp; Student Dashboards, Faculty Management, Courses, Admission &amp; Fee Payment.</p>
+      <div class="proj-stack"><span>React</span><span>Node.js</span><span>Express</span><span>PostgreSQL</span><span>TypeORM</span></div>
+      <div class="proj-footer"><span class="proj-soon">🔗 Coming soon</span></div>
     </div>
-
-    <div class="proj-card">
-      <div class="proj-index">PROJECT / 02</div>
-      <div class="proj-name">Portfolio Website</div>
-      <p class="proj-desc">Responsive personal website showcasing education, projects, and skills with a modern dark design.</p>
-      <div class="proj-stack">
-        <span class="proj-tag">HTML</span>
-        <span class="proj-tag">CSS</span>
-        <span class="proj-tag">JavaScript</span>
-      </div>
-      <span class="proj-link-soon">🔗 Link coming soon...</span>
+    <div class="proj-card tilt reveal">
+      <div class="proj-num">02</div>
+      <div class="proj-glow"></div>
+      <h3 class="proj-name">Portfolio Website</h3>
+      <p class="proj-desc">Responsive personal portfolio with cinematic animations, 3D effects, and dark luxury design.</p>
+      <div class="proj-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+      <div class="proj-footer"><span class="proj-soon">🔗 Coming soon</span></div>
     </div>
-
-    <div class="proj-card">
-      <div class="proj-index">PROJECT / 03</div>
-      <div class="proj-name">Tic-Tac-Toe Game</div>
-      <p class="proj-desc">Interactive X-O game with clean UI, win detection, and instant replay functionality.</p>
-      <div class="proj-stack">
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">JavaScript</span>
-        <span class="proj-tag">CSS</span>
-      </div>
-      <a href="https://tic-tak-game-ruby.vercel.app/" target="_blank" class="proj-link">🚀 View Live →</a>
+    <div class="proj-card tilt reveal">
+      <div class="proj-num">03</div>
+      <div class="proj-glow"></div>
+      <h3 class="proj-name">Tic-Tac-Toe Game</h3>
+      <p class="proj-desc">Interactive X-O game with clean UI, win detection, and instant replay.</p>
+      <div class="proj-stack"><span>React</span><span>JavaScript</span><span>CSS</span></div>
+      <div class="proj-footer"><a href="https://tic-tak-game-ruby.vercel.app/" target="_blank" class="proj-link">🚀 Live Demo →</a></div>
     </div>
-
-    <div class="proj-card">
-      <div class="proj-index">PROJECT / 04</div>
-      <div class="proj-name">Money Converter</div>
-      <p class="proj-desc">Real-time currency converter supporting multiple international currencies with live calculations.</p>
-      <div class="proj-stack">
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">JavaScript</span>
-        <span class="proj-tag">API</span>
-      </div>
-      <a href="https://money-converter-rho.vercel.app/" target="_blank" class="proj-link">🚀 View Live →</a>
+    <div class="proj-card tilt reveal">
+      <div class="proj-num">04</div>
+      <div class="proj-glow"></div>
+      <h3 class="proj-name">Money Converter</h3>
+      <p class="proj-desc">Real-time currency converter with multiple international currencies and live calculations.</p>
+      <div class="proj-stack"><span>React</span><span>JavaScript</span><span>API</span></div>
+      <div class="proj-footer"><a href="https://money-converter-rho.vercel.app/" target="_blank" class="proj-link">🚀 Live Demo →</a></div>
     </div>
-
   </div>
 </section>
 
-<!-- HARDWARE PROJECTS -->
-<section id="hardware">
-  <div class="section-eyebrow"><span></span>06 — Hardware Projects</div>
-  <h2 class="section-title">Hardware <em>Projects</em></h2>
-  <div class="hw-wrap">
+<!-- HARDWARE -->
+<section id="hardware" class="s-light">
+  <div class="s-label reveal"><span></span>06 / HARDWARE</div>
+  <h2 class="s-title reveal">IOT <em>PROJECT</em><span class="s-dot">.</span></h2>
+  <div class="hw-feature reveal">
     <div class="hw-content">
-      <span class="hw-badge">⬡ IoT Project</span>
-      <div class="hw-title">Blink Stick with Glasses</div>
-      <p class="hw-desc">An innovative IoT-based assistive device — smart glasses detect eye blink patterns and wirelessly control a stick, enabling hands-free interaction for differently-abled individuals.</p>
-      <ul class="hw-list">
-        <li>Eye blink detection using sensors embedded in glasses frame</li>
-        <li>Wireless signal transmission between glasses and stick</li>
+      <div class="hw-badge-pill">⬡ &nbsp;IoT · Assistive Tech</div>
+      <h3 class="hw-title">Blink Stick<br>with Glasses</h3>
+      <p class="hw-desc">Smart glasses detect eye blink patterns and wirelessly control a stick — enabling hands-free interaction for differently-abled individuals.</p>
+      <ul class="hw-feats">
+        <li>Eye blink detection via embedded sensors</li>
+        <li>Wireless signal transmission</li>
         <li>Real-time response with minimal latency</li>
-        <li>Designed as an assistive technology solution</li>
-        <li>Built using IoT microcontrollers and custom sensor integration</li>
+        <li>Assistive technology for differently-abled</li>
+        <li>Custom IoT microcontroller integration</li>
       </ul>
     </div>
     <div class="hw-visual">
-      <div class="iot-box">
-        <div class="iot-r iot-r2"></div>
-        <div class="iot-r iot-r1"></div>
-        <div class="iot-c">👓</div>
-        <div class="iot-n" style="transform:translate(-50%,-50%) translate(0,-76px)">📡</div>
-        <div class="iot-n" style="transform:translate(-50%,-50%) translate(66px,-38px)">⚡</div>
-        <div class="iot-n" style="transform:translate(-50%,-50%) translate(66px,38px)">🔵</div>
-        <div class="iot-n" style="transform:translate(-50%,-50%) translate(0,76px)">🦯</div>
-        <div class="iot-n" style="transform:translate(-50%,-50%) translate(-66px,38px)">🔋</div>
-        <div class="iot-n" style="transform:translate(-50%,-50%) translate(-66px,-38px)">💡</div>
+      <div class="iot-scene">
+        <div class="iot-orbit iot-o1"></div>
+        <div class="iot-orbit iot-o2"></div>
+        <div class="iot-orbit iot-o3"></div>
+        <div class="iot-core">👓</div>
+        <div class="iot-node" style="--a:0deg">📡</div>
+        <div class="iot-node" style="--a:60deg">⚡</div>
+        <div class="iot-node" style="--a:120deg">🔵</div>
+        <div class="iot-node" style="--a:180deg">🦯</div>
+        <div class="iot-node" style="--a:240deg">🔋</div>
+        <div class="iot-node" style="--a:300deg">💡</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- RESUME -->
-<section id="resume">
-  <div class="section-eyebrow" style="justify-content:center"><span></span>07 — Resume<span></span></div>
-  <h2 class="section-title" style="text-align:center">Download My <em>Resume</em></h2>
-  <p class="resume-sub">Get a full copy of my resume with all skills, experience &amp; projects.</p>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
-    <div class="resume-box">
-      <div class="resume-ico">📄</div>
-      <div>
-        <div class="resume-name">Rudra_Panchal_Resume.pdf</div>
-        <div class="resume-meta">Full Stack Developer · Updated 2025</div>
-      </div>
+<section id="resume" class="s-dark" style="text-align:center">
+  <div class="s-label reveal" style="justify-content:center"><span></span>07 / RESUME<span></span></div>
+  <h2 class="s-title reveal" style="text-align:center">MY <em>RESUME</em><span class="s-dot">.</span></h2>
+  <p class="resume-sub reveal">Everything you need to know — in one document.</p>
+  <div class="resume-card tilt reveal">
+    <div class="resume-card-glow"></div>
+    <div class="resume-icon">📄</div>
+    <div class="resume-info">
+      <div class="resume-fname">Rudra_Panchal_Resume.pdf</div>
+      <div class="resume-fmeta">Full Stack Developer · 2025</div>
     </div>
-    <a href="Rudra_Panchal_Resume.pdf" download="Rudra_Panchal_Resume.pdf" class="btn-primary">⬇ Download Resume</a>
-    <p class="resume-hint">PDF FORMAT · FREE TO DOWNLOAD</p>
+    <a href="Rudra_Panchal_Resume.pdf" download="Rudra_Panchal_Resume.pdf" class="btn-primary magnetic">
+      <span class="btn-bg"></span><span class="btn-text">⬇ Download</span>
+    </a>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="section-eyebrow" style="justify-content:center"><span></span>08 — Get In Touch<span></span></div>
-  <h2 class="section-title" style="text-align:center">Let's <em>Connect</em></h2>
-  <a href="mailto:panchalrudra04492@gmail.com" class="contact-big">panchalrudra04492&#64;gmail.com</a>
-  <div class="contact-row">
-    <a href="tel:+916352273970"                  class="contact-btn">📞 +91 63522 73970</a>
-    <a href="mailto:panchalrudra04492@gmail.com"  class="contact-btn">✉️ Send Email</a>
-    <a href="#resume"                             class="contact-btn">📄 My Resume</a>
+<section id="contact" class="s-light" style="text-align:center">
+  <div class="s-label reveal" style="justify-content:center"><span></span>08 / CONTACT<span></span></div>
+  <h2 class="s-title reveal" style="text-align:center">LET'S <em>TALK</em><span class="s-dot">.</span></h2>
+  <p class="contact-sub reveal">Have a project in mind? Let's build something amazing together.</p>
+  <a href="mailto:panchalrudra04492@gmail.com" class="contact-email reveal">panchalrudra04492&#64;gmail.com</a>
+  <div class="contact-links stagger">
+    <a href="tel:+916352273970" class="contact-pill reveal magnetic">📞 +91 63522 73970</a>
+    <a href="mailto:panchalrudra04492@gmail.com" class="contact-pill reveal magnetic">✉️ Send Email</a>
+    <a href="#resume" class="contact-pill reveal magnetic">📄 Resume</a>
   </div>
 </section>
 
 <footer>
-  <span>© 2025 Rudra Panchal — Full Stack Developer</span>
-  <span class="footer-r">Ahmedabad, Gujarat 🇮🇳</span>
+  <div class="footer-left">© 2025 <strong>Rudra Panchal</strong></div>
+  <div class="footer-center">Full Stack Developer</div>
+  <div class="footer-right">Ahmedabad, Gujarat 🇮🇳</div>
 </footer>
 
 <script src="script.js"></script>
