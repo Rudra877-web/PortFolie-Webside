@@ -7,6 +7,14 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* FORCE cursor hide on desktop */
+    * { cursor: none !important; }
+    @media (hover: none) {
+      * { cursor: auto !important; }
+      #cursor, #cursorRing { display: none !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -70,7 +78,7 @@
   <div class="about-grid">
     <div class="about-left">
       <div class="about-photo-wrap">
-        <img src="rudra.jpg" alt="Rudra Panchal" class="about-photo">
+        <img src="rudra.jpeg" alt="Rudra Panchal" class="about-photo">
         <div class="about-photo-border"></div>
       </div>
       <p class="about-text">
