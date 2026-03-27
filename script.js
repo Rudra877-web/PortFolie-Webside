@@ -27,7 +27,8 @@
     categoryPills: document.getElementById('categoryPills'),
     categorySelect: document.getElementById('categorySelect'),
     searchForm: document.getElementById('searchForm'),
-    searchInput: document.getElementById('searchInput')
+    searchInput: document.getElementById('searchInput'),
+    serviceStatus: document.getElementById('serviceStatus')
   };
 
   const clone = (obj) => JSON.parse(JSON.stringify(obj));
@@ -69,6 +70,45 @@
       snapshot: () => clone(products)
     };
   })();
+
+  const storageHealthy = (() => {
+    try {
+      const k = '__amazonia-ping';
+      localStorage.setItem(k, '1');
+      localStorage.removeItem(k);
+      return true;
+    } catch(err) {
+      return false;
+    }
+  })();
+
+  const getServiceData = () => {
+    const productCount = state.products.length;
+    const cartCount = state.cart.reduce((acc, item) => acc + item.qty, 0);
+    const latencyRange = `${LATENCY_MIN}-${LATENCY_MIN + LATENCY_JITTER}ms`;
+    return [
+      { name: 'Catalog repository', detail: `${productCount} products • ${latencyRange} mock latency`, healthy: true },
+      { name: 'Cart repository', detail: `${cartCount} item${cartCount === 1 ? '' : 's'} persisted via ${storageHealthy ? 'localStorage' : 'memory fallback'}`, healthy: storageHealthy },
+      { name: 'UX orchestrator', detail: 'Search, filters, and aria-live updates active', healthy: true }
+    ];
+  };
+
+  const renderServices = () => {
+    if(!els.serviceStatus) return;
+    els.serviceStatus.innerHTML = '';
+    getServiceData().forEach((svc) => {
+      const card = document.createElement('article');
+      card.className = 'status-card';
+      card.innerHTML = `
+        <span class="status-dot ${svc.healthy ? 'ok' : 'warn'}"></span>
+        <div>
+          <div class="status-name">${svc.name}</div>
+          <div class="status-detail">${svc.detail}</div>
+        </div>
+      `;
+      els.serviceStatus.appendChild(card);
+    });
+  };
 
   const cartRepository = (() => {
     const KEY = 'amazonia-cart';
@@ -141,6 +181,7 @@
     });
 
     if(els.resultsCount) els.resultsCount.textContent = `${list.length} item${list.length === 1 ? '' : 's'}`;
+    renderServices();
   };
 
   const openCart = () => {
@@ -205,6 +246,7 @@
     if(els.cartSubtotal) els.cartSubtotal.textContent = formatted;
     if(els.cartTotal) els.cartTotal.textContent = formatted;
     updateCartBadge(itemCount);
+    renderServices();
   };
 
   const syncCartAndRender = (newCart) => {
