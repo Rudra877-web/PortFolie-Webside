@@ -3,345 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RP | Full Stack Developer</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Amazonia | Full-Stack Amazon Clone</title>
+  <meta name="description" content="Full-stack inspired Amazon clone with catalog, cart, and checkout flows backed by client-side repositories.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- SCROLL PROGRESS -->
-<div id="scrollProgress"></div>
-
-<!-- LOADER -->
-<div id="loader">
-  <div class="loader-inner">
-    <div class="loader-logo">
-      <span class="loader-r">R</span><span class="loader-p">P</span>
-    </div>
-    <div class="loader-bar-wrap"><div class="loader-bar-fill" id="loaderBar"></div></div>
-    <div class="loader-percent" id="loaderPercent">0%</div>
-  </div>
-</div>
-
-<!-- CURSOR -->
-<div id="cursor"><div class="cursor-dot"></div></div>
-<div id="cursorRing"></div>
-<div id="cursorText"></div>
-
-<!-- NAV -->
-<nav id="mainNav">
-  <a href="#hero" class="nav-logo">
-    <span class="nl-r">R</span><span class="nl-p">P</span><span class="nl-dot">.</span>
-  </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about"      onclick="closeNav()">About</a></li>
-    <li><a href="#skills"     onclick="closeNav()">Skills</a></li>
-    <li><a href="#experience" onclick="closeNav()">Experience</a></li>
-    <li><a href="#software"   onclick="closeNav()">Projects</a></li>
-    <li><a href="#resume"     onclick="closeNav()">Resume</a></li>
-    <li><a href="#contact"    onclick="closeNav()">Contact</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <canvas id="particles"></canvas>
-  <div class="hero-noise"></div>
-
-  <div class="hero-left">
-    <div class="hero-tag">
-      <span class="tag-dot"></span>
-      <span class="tag-text">Available for opportunities</span>
-    </div>
-
-    <div class="hero-name-wrap">
-      <h1 class="hero-name" id="heroName">
-        <span class="hn-line" data-text="RUDRA">RUDRA</span>
-        <span class="hn-line outline" data-text="PANCHAL">PANCHAL</span>
-      </h1>
-    </div>
-
-    <div class="hero-role">
-      <span class="role-prefix">&lt;</span>
-      <span id="typed"></span>
-      <span class="role-suffix">/&gt;</span>
-    </div>
-
-    <p class="hero-desc">Crafting <strong>digital experiences</strong> that matter — from pixel-perfect frontends to robust backends.</p>
-
-    <div class="hero-cta">
-      <a href="#software" class="btn-primary magnetic" data-cursor="EXPLORE">
-        <span class="btn-bg"></span>
-        <span class="btn-text">View Projects</span>
-        <span class="btn-arrow">→</span>
-      </a>
-      <a href="#contact" class="btn-ghost magnetic" data-cursor="CONNECT">
-        Get In Touch
-      </a>
-    </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="hero-stats">
-      <div class="stat-card magnetic">
-        <div class="stat-glow"></div>
-        <div class="stat-num count-up" data-val="2" data-suffix="">0</div>
-        <div class="stat-label">Internships</div>
-      </div>
-      <div class="stat-card magnetic">
-        <div class="stat-glow"></div>
-        <div class="stat-num count-up" data-val="5" data-suffix="+">0+</div>
-        <div class="stat-label">Projects</div>
-      </div>
-      <div class="stat-card magnetic">
-        <div class="stat-glow"></div>
-        <div class="stat-num">6th</div>
-        <div class="stat-label">Semester</div>
-      </div>
-    </div>
-
-    <div class="hero-badge">
-      <div class="badge-ring"></div>
-      <div class="badge-inner">
-        <span class="badge-icon">⚡</span>
-        <span class="badge-text">FULL STACK</span>
-        <span class="badge-sub">DEVELOPER</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-scroll-hint">
-    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-    <span>SCROLL</span>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-strip">
-  <div class="marquee-track">
-    <span>React.js</span><span>•</span><span>Node.js</span><span>•</span><span>PostgreSQL</span><span>•</span><span>Express.js</span><span>•</span><span>TypeORM</span><span>•</span><span>REST API</span><span>•</span><span>JavaScript</span><span>•</span><span>IoT</span><span>•</span><span>Git</span><span>•</span>
-    <span>React.js</span><span>•</span><span>Node.js</span><span>•</span><span>PostgreSQL</span><span>•</span><span>Express.js</span><span>•</span><span>TypeORM</span><span>•</span><span>REST API</span><span>•</span><span>JavaScript</span><span>•</span><span>IoT</span><span>•</span><span>Git</span><span>•</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section id="about" class="s-dark">
-  <div class="s-label reveal"><span></span>01 / ABOUT</div>
-  <h2 class="s-title reveal">WHO <em>AM</em> I<span class="s-dot">.</span></h2>
-  <div class="about-wrap">
-    <div class="about-photo-col reveal">
-      <div class="photo-frame">
-        <div class="photo-corner tl"></div>
-        <div class="photo-corner tr"></div>
-        <div class="photo-corner bl"></div>
-        <div class="photo-corner br"></div>
-        <img src="rudra.jpeg" alt="Rudra Panchal" class="about-photo">
-        <div class="photo-scan"></div>
-        <div class="photo-overlay"></div>
-        <div class="photo-caption">
-          <span class="pc-name">RUDRA PANCHAL</span>
-          <span class="pc-role">Full Stack Developer</span>
+  <div id="srAnnouncer" class="sr-only" aria-live="polite"></div>
+  <noscript>This experience needs JavaScript to simulate catalog and cart interactions.</noscript>
+  <header class="header">
+    <div class="header-top container">
+      <a class="brand" href="#hero" aria-label="Amazonia home">
+        <span class="brand-mark">a</span>
+        <div class="brand-copy">
+          <span class="brand-name">Amazonia</span>
+          <span class="brand-sub">full-stack clone</span>
         </div>
+      </a>
+
+      <div class="deliver">
+        <span class="deliver-label">Deliver to</span>
+        <span class="deliver-place">India</span>
+      </div>
+
+      <form class="search" id="searchForm" role="search">
+        <label class="sr-only" for="searchInput">Search products</label>
+        <select id="categorySelect" aria-label="Select catalog category">
+          <option value="all">All</option>
+          <option value="electronics">Electronics</option>
+          <option value="home">Home</option>
+          <option value="essentials">Essentials</option>
+          <option value="fashion">Fashion</option>
+          <option value="gaming">Gaming</option>
+          <option value="books">Books</option>
+          <option value="lifestyle">Lifestyle</option>
+        </select>
+        <input type="search" id="searchInput" placeholder="Search for electronics, essentials, fashion..." autocomplete="off">
+        <button type="submit" aria-label="Search">🔍</button>
+      </form>
+
+      <div class="header-actions">
+        <button class="action-btn" id="signInBtn">
+          <span class="muted">Hello, sign in</span>
+          <strong>Account & Lists</strong>
+        </button>
+        <button class="action-btn">
+          <span class="muted">Returns</span>
+          <strong>& Orders</strong>
+        </button>
+        <button class="cart-btn" id="cartButton" aria-label="Open cart">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
       </div>
     </div>
-    <div class="about-content">
-      <p class="about-bio reveal">I'm a <strong>passionate Full Stack Web Developer</strong> pursuing a Diploma in Computer Engineering (6th Semester) at <strong>Shree Swaminarayan Polytechnic</strong>.<br><br>Hands-on experience with <strong>React JS, Node.js, Express, and PostgreSQL</strong>. Completed <strong>two internships</strong> at Light Micro Finance Company on real-time production projects.<br><br>Self-motivated, always hungry to learn and build things that matter.</p>
-      <div class="info-cards stagger">
-        <div class="info-card reveal"><span class="ic-label">📍 Location</span><span class="ic-val">Ahmedabad, Gujarat</span></div>
-        <div class="info-card reveal"><span class="ic-label">🎂 Born</span><span class="ic-val">08 / 11 / 2007</span></div>
-        <div class="info-card reveal"><span class="ic-label">🌐 Languages</span><span class="ic-val">English, Hindi</span></div>
-        <div class="info-card reveal"><span class="ic-label">📧 Email</span><span class="ic-val">panchalrudra04492&#64;gmail.com</span></div>
-        <div class="info-card reveal"><span class="ic-label">📱 Phone</span><span class="ic-val">+91 63522 73970</span></div>
-        <div class="info-card reveal"><span class="ic-label">👤 Gender</span><span class="ic-val">Male</span></div>
+
+    <div class="header-bottom">
+      <div class="container nav-pills" id="categoryPills">
+        <button class="pill active" data-category="all">All</button>
+        <button class="pill" data-category="electronics">Electronics</button>
+        <button class="pill" data-category="home">Home</button>
+        <button class="pill" data-category="essentials">Essentials</button>
+        <button class="pill" data-category="fashion">Fashion</button>
+        <button class="pill" data-category="gaming">Gaming</button>
+        <button class="pill" data-category="books">Books</button>
+        <button class="pill" data-category="lifestyle">Lifestyle</button>
       </div>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- SKILLS -->
-<section id="skills" class="s-light">
-  <div class="s-label reveal"><span></span>02 / SKILLS</div>
-  <h2 class="s-title reveal">TECH <em>STACK</em><span class="s-dot">.</span></h2>
-  <div class="skills-grid stagger">
-    <div class="sk-card tilt reveal" data-color="#4f8ef7"><div class="sk-icon">🖥️</div><div class="sk-name">Frontend</div><div class="sk-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React.js</span><span>Responsive</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#06b6d4"><div class="sk-icon">⚙️</div><div class="sk-name">Backend</div><div class="sk-tags"><span>Node.js</span><span>Express.js</span><span>REST API</span><span>Auth</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#8b5cf6"><div class="sk-icon">🗄️</div><div class="sk-name">Database</div><div class="sk-tags"><span>PostgreSQL</span><span>TypeORM</span><span>MySQL</span><span>RDBMS</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#f59e0b"><div class="sk-icon">💻</div><div class="sk-name">Languages</div><div class="sk-tags"><span>C</span><span>C++</span><span>Python</span><span>Java</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#10b981"><div class="sk-icon">🛠️</div><div class="sk-name">Tools</div><div class="sk-tags"><span>Git</span><span>GitHub</span><span>Postman</span><span>VS Code</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#f43f5e"><div class="sk-icon">🧠</div><div class="sk-name">CS Fundamentals</div><div class="sk-tags"><span>DSA</span><span>RDBMS</span><span>OOP</span></div><div class="sk-glow"></div></div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience" class="s-dark">
-  <div class="s-label reveal"><span></span>03 / EXPERIENCE</div>
-  <h2 class="s-title reveal">WORK <em>HISTORY</em><span class="s-dot">.</span></h2>
-  <div class="exp-block reveal">
-    <div class="exp-left">
-      <div class="exp-badge">INTERNSHIP</div>
-      <div class="exp-period">MAY 2025<br>—<br>JUL 2025</div>
-      <div class="exp-line"><div class="exp-line-fill"></div></div>
-    </div>
-    <div class="exp-right">
-      <div class="exp-card tilt">
-        <div class="exp-glow"></div>
-        <div class="exp-header">
-          <div>
-            <h3 class="exp-role">Web Development Intern</h3>
-            <div class="exp-company">⚡ Light Micro Finance Company</div>
+  <main>
+    <section class="hero" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Full-stack Amazon-style experience</p>
+          <h1>Shop the Amazonia clone</h1>
+          <p class="lede">Simulated catalog, cart, and checkout flows backed by in-browser repositories. Designed to mirror the Amazon retail surface without needing a server.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#deals">Browse deals</a>
+            <button class="btn ghost" id="openCartInline">View cart</button>
           </div>
-          <div class="exp-stipend-badge">💰 Stipend</div>
+          <div class="assurance">
+            <span>⚡ Mock API latency</span>
+            <span>🔒 Safe checkout placeholder</span>
+            <span>🛒 Cart persistence</span>
+          </div>
         </div>
-        <ul class="exp-list">
-          <li><span class="eli">//</span>Developed full-stack web apps with React.js, Node.js, Express.js &amp; PostgreSQL.</li>
-          <li><span class="eli">//</span>Built RESTful APIs and integrated with frontend seamlessly.</li>
-          <li><span class="eli">//</span>Implemented secure login, registration &amp; authentication modules.</li>
-          <li><span class="eli">//</span>Created admin dashboards and faculty management systems.</li>
-          <li><span class="eli">//</span>Worked on deployment and bug fixing for live production projects.</li>
+        <div class="hero-panel">
+          <div class="summary-card">
+            <div class="summary-label">Today's lightning deal</div>
+            <div class="summary-title">Echo Sphere Smart Speaker</div>
+            <div class="summary-price">
+              <span class="price-new">₹3,999</span>
+              <span class="price-old">₹7,499</span>
+              <span class="price-save">Save 47%</span>
+            </div>
+            <ul class="summary-points">
+              <li>360° immersive audio</li>
+              <li>Alexa built-in</li>
+              <li>Free 2-day delivery</li>
+            </ul>
+            <button class="btn secondary" data-add="echo-sphere">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo-grid container" id="deals">
+      <article class="promo-card">
+        <p class="promo-label">Prime-ready</p>
+        <h3>Same-day essentials</h3>
+        <p>Stock your pantry with fast-moving household picks.</p>
+        <a href="#productGrid" class="promo-link">Shop essentials →</a>
+      </article>
+      <article class="promo-card accent">
+        <p class="promo-label">Up to 60% off</p>
+        <h3>Electronics & gadgets</h3>
+        <p>Headphones, speakers, and smart home gear curated for you.</p>
+        <a href="#productGrid" class="promo-link">Browse electronics →</a>
+      </article>
+      <article class="promo-card">
+        <p class="promo-label">New arrivals</p>
+        <h3>Amazonia Fashion</h3>
+        <p>Casual fits, athleisure, and accessories under one roof.</p>
+        <a href="#productGrid" class="promo-link">See fashion picks →</a>
+      </article>
+      <article class="promo-card">
+        <p class="promo-label">Reader's corner</p>
+        <h3>Books & learning</h3>
+        <p>Hardcovers, best-sellers, and skill-boosting reads.</p>
+        <a href="#productGrid" class="promo-link">Open bookshelf →</a>
+      </article>
+    </section>
+
+    <section class="products-section">
+      <div class="container section-head">
+        <div>
+          <p class="eyebrow">Featured items</p>
+          <h2>Deals of the day</h2>
+          <p class="muted">Rendered from the catalog repository with instant filtering and cart sync.</p>
+        </div>
+        <div class="section-actions">
+          <span id="resultsCount">0 items</span>
+        </div>
+      </div>
+      <div class="container">
+        <div id="productGrid" class="product-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="stack-section">
+      <div class="container stack-grid">
+        <div>
+          <p class="eyebrow">Under the hood</p>
+          <h2>Repository-driven client stack</h2>
+          <p class="muted">Product and cart data flows through lightweight repositories inside <code>script.js</code>, simulating backend latency and persistence without a server.</p>
+        </div>
+        <div class="stack-cards">
+          <article class="stack-card">
+            <h3>Catalog repository</h3>
+            <p>Seeds curated products, supports category filters, search, and returns results with mocked latency.</p>
+          </article>
+          <article class="stack-card">
+            <h3>Cart repository</h3>
+            <p>Persists cart state locally, handles quantity changes, and keeps header badges in sync.</p>
+          </article>
+          <article class="stack-card">
+            <h3>UX orchestration</h3>
+            <p>Event delegation powers add-to-cart, inline hero CTA, and cart drawer controls for a smooth Amazon-like flow.</p>
+          </article>
+        </div>
+        <div class="status-board">
+          <div>
+            <p class="eyebrow">Runtime signals</p>
+            <h3>Mock services status</h3>
+            <p class="muted">Client-side repositories simulate full-stack behavior with latency, persistence, and accessibility hooks.</p>
+          </div>
+          <div id="serviceStatus" class="status-grid" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="cart-drawer hidden" id="cartDrawer" aria-hidden="true" aria-label="Shopping cart">
+    <div class="cart-backdrop" id="cartBackdrop"></div>
+    <aside class="cart-panel" role="dialog" aria-modal="true">
+      <div class="cart-header">
+        <div>
+          <p class="eyebrow">Your cart</p>
+          <h3>Ready to check out?</h3>
+        </div>
+        <button class="icon-btn" id="closeCart" aria-label="Close cart">✕</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div id="cartEmpty" class="cart-empty hidden">Your cart is empty. Add items to see them here.</div>
+      <div class="cart-summary">
+        <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+        <div class="summary-row"><span>Shipping</span><span>Free</span></div>
+        <div class="summary-total"><span>Estimated total</span><span id="cartTotal">₹0</span></div>
+        <button class="btn primary block" id="checkoutBtn">Proceed to checkout</button>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <p class="muted">Amazonia Clone</p>
+        <h3>Built for full-stack demos</h3>
+        <p class="muted">Static assets, simulated repositories, and interactive cart flows bundled in one lightweight project.</p>
+      </div>
+      <div>
+        <p class="muted">Explore</p>
+        <ul class="footer-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#deals">Deals</a></li>
+          <li><a href="#productGrid">Catalog</a></li>
+          <li><a href="#cartButton">Cart</a></li>
         </ul>
-        <div class="exp-tags"><span>React.js</span><span>Node.js</span><span>PostgreSQL</span><span>Express</span></div>
+      </div>
+      <div>
+        <p class="muted">Technology</p>
+        <ul class="footer-links">
+          <li>HTML & CSS</li>
+          <li>Vanilla JavaScript</li>
+          <li>Local storage persistence</li>
+          <li>Mock API latency</li>
+        </ul>
       </div>
     </div>
-  </div>
-</section>
+    <div class="footer-bottom">Made with ♥ to mirror the Amazon shopping journey.</div>
+  </footer>
 
-<!-- EDUCATION -->
-<section id="education" class="s-light">
-  <div class="s-label reveal"><span></span>04 / EDUCATION</div>
-  <h2 class="s-title reveal">ACADEMIC <em>JOURNEY</em><span class="s-dot">.</span></h2>
-  <div class="edu-cards stagger">
-    <div class="edu-card tilt reveal">
-      <div class="edu-num">01</div>
-      <div class="edu-icon-big">🎓</div>
-      <div class="edu-degree">Diploma in Computer Engineering</div>
-      <div class="edu-school">Shree Swaminarayan Polytechnic, Gandhinagar</div>
-      <div class="edu-year">2023 — Present · 6th Semester</div>
-      <div class="edu-glow"></div>
-    </div>
-    <div class="edu-card tilt reveal">
-      <div class="edu-num">02</div>
-      <div class="edu-icon-big">📚</div>
-      <div class="edu-degree">SSC — 10th Standard</div>
-      <div class="edu-school">Gujarat Secondary Education Board (GSEB)</div>
-      <div class="edu-year">Completed 2023</div>
-      <div class="edu-glow"></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="software" class="s-dark">
-  <div class="s-label reveal"><span></span>05 / PROJECTS</div>
-  <h2 class="s-title reveal">SOFTWARE <em>WORK</em><span class="s-dot">.</span></h2>
-  <div class="proj-grid stagger">
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">01</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">College Management System</h3>
-      <p class="proj-desc">Full-stack system — Admin &amp; Student Dashboards, Faculty Management, Courses, Admission &amp; Fee Payment.</p>
-      <div class="proj-stack"><span>React</span><span>Node.js</span><span>Express</span><span>PostgreSQL</span><span>TypeORM</span></div>
-      <div class="proj-footer"><span class="proj-soon">🔗 Coming soon</span></div>
-    </div>
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">02</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">Portfolio Website</h3>
-      <p class="proj-desc">Responsive personal portfolio with cinematic animations, 3D effects, and dark luxury design.</p>
-      <div class="proj-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
-      <div class="proj-footer"><span class="proj-soon">🔗 Coming soon</span></div>
-    </div>
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">03</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">Tic-Tac-Toe Game</h3>
-      <p class="proj-desc">Interactive X-O game with clean UI, win detection, and instant replay.</p>
-      <div class="proj-stack"><span>React</span><span>JavaScript</span><span>CSS</span></div>
-      <div class="proj-footer"><a href="https://tic-tak-game-ruby.vercel.app/" target="_blank" class="proj-link">🚀 Live Demo →</a></div>
-    </div>
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">04</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">Money Converter</h3>
-      <p class="proj-desc">Real-time currency converter with multiple international currencies and live calculations.</p>
-      <div class="proj-stack"><span>React</span><span>JavaScript</span><span>API</span></div>
-      <div class="proj-footer"><a href="https://money-converter-rho.vercel.app/" target="_blank" class="proj-link">🚀 Live Demo →</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- HARDWARE -->
-<section id="hardware" class="s-light">
-  <div class="s-label reveal"><span></span>06 / HARDWARE</div>
-  <h2 class="s-title reveal">IOT <em>PROJECT</em><span class="s-dot">.</span></h2>
-  <div class="hw-feature reveal">
-    <div class="hw-content">
-      <div class="hw-badge-pill">⬡ &nbsp;IoT · Assistive Tech</div>
-      <h3 class="hw-title">Blink Stick<br>with Glasses</h3>
-      <p class="hw-desc">Smart glasses detect eye blink patterns and wirelessly control a stick — enabling hands-free interaction for differently-abled individuals.</p>
-      <ul class="hw-feats">
-        <li>Eye blink detection via embedded sensors</li>
-        <li>Wireless signal transmission</li>
-        <li>Real-time response with minimal latency</li>
-        <li>Assistive technology for differently-abled</li>
-        <li>Custom IoT microcontroller integration</li>
-      </ul>
-    </div>
-    <div class="hw-visual">
-      <div class="iot-scene">
-        <div class="iot-orbit iot-o1"></div>
-        <div class="iot-orbit iot-o2"></div>
-        <div class="iot-orbit iot-o3"></div>
-        <div class="iot-core">👓</div>
-        <div class="iot-node" style="--a:0deg">📡</div>
-        <div class="iot-node" style="--a:60deg">⚡</div>
-        <div class="iot-node" style="--a:120deg">🔵</div>
-        <div class="iot-node" style="--a:180deg">🦯</div>
-        <div class="iot-node" style="--a:240deg">🔋</div>
-        <div class="iot-node" style="--a:300deg">💡</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RESUME -->
-<section id="resume" class="s-dark" style="text-align:center">
-  <div class="s-label reveal" style="justify-content:center"><span></span>07 / RESUME<span></span></div>
-  <h2 class="s-title reveal" style="text-align:center">MY <em>RESUME</em><span class="s-dot">.</span></h2>
-  <p class="resume-sub reveal">Everything you need to know — in one document.</p>
-  <div class="resume-card tilt reveal">
-    <div class="resume-card-glow"></div>
-    <div class="resume-icon">📄</div>
-    <div class="resume-info">
-      <div class="resume-fname">Rudra_Panchal_Resume.pdf</div>
-      <div class="resume-fmeta">Full Stack Developer · 2025</div>
-    </div>
-    <a href="Rudra_Panchal_Resume.pdf" download="Rudra_Panchal_Resume.pdf" class="btn-primary magnetic">
-      <span class="btn-bg"></span><span class="btn-text">⬇ Download</span>
-    </a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="s-light" style="text-align:center">
-  <div class="s-label reveal" style="justify-content:center"><span></span>08 / CONTACT<span></span></div>
-  <h2 class="s-title reveal" style="text-align:center">LET'S <em>TALK</em><span class="s-dot">.</span></h2>
-  <p class="contact-sub reveal">Have a project in mind? Let's build something amazing together.</p>
-  <a href="mailto:panchalrudra04492@gmail.com" class="contact-email reveal">panchalrudra04492&#64;gmail.com</a>
-  <div class="contact-links stagger">
-    <a href="tel:+916352273970" class="contact-pill reveal magnetic">📞 +91 63522 73970</a>
-    <a href="mailto:panchalrudra04492@gmail.com" class="contact-pill reveal magnetic">✉️ Send Email</a>
-    <a href="#resume" class="contact-pill reveal magnetic">📄 Resume</a>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-left">© 2026 <strong>Rudra Panchal</strong></div>
-  <div class="footer-center">Full Stack Developer</div>
-  <div class="footer-right">Ahmedabad, Gujarat 🇮🇳</div>
-</footer>
-
-<script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
