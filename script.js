@@ -1,5 +1,6 @@
 // ══════════════════════════════════════════════════════════
-//  RUDRA PANCHAL — NEXT LEVEL ANIMATION ENGINE 🚀
+//  RUDRA PANCHAL — NEXT LEVEL ANIMATION ENGINE v2 🚀
+//  Upgrades: Three.js 3D Hero + Project Card v2 interactions
 // ══════════════════════════════════════════════════════════
 
 // ── LOADER ──────────────────────────────────────────────────
@@ -57,81 +58,204 @@ document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; 
   requestAnimationFrame(loop);
 })();
 
-// Cursor hover effects
-document.querySelectorAll('a,button,.tilt,.magnetic').forEach(function(el){
-  var label = el.getAttribute('data-cursor');
-  el.addEventListener('mouseenter', function(){
-    if(dot){ dot.style.transform='scale(3)'; dot.style.background='#06b6d4'; dot.style.boxShadow='0 0 20px #06b6d4,0 0 40px rgba(6,182,212,.5)'; }
-    if(ring){ ring.style.width='60px'; ring.style.height='60px'; ring.style.borderColor='#06b6d4'; ring.style.opacity='0.8'; }
-    if(curTxt && label){ curTxt.textContent=label; curTxt.style.opacity='1'; }
+// Cursor hover effects — includes project v2 buttons
+function bindCursorHovers(){
+  document.querySelectorAll('a,button,.tilt,.magnetic,.pcv2-btn').forEach(function(el){
+    if(el._cursorBound) return;
+    el._cursorBound = true;
+    var label = el.getAttribute('data-cursor');
+    el.addEventListener('mouseenter', function(){
+      if(dot){ dot.style.transform='scale(3)'; dot.style.background='#06b6d4'; dot.style.boxShadow='0 0 20px #06b6d4,0 0 40px rgba(6,182,212,.5)'; }
+      // project cards get a bigger ring expansion
+      var isProj = el.closest('.proj-card-v2');
+      var ringSize = isProj ? '80px' : '60px';
+      if(ring){ ring.style.width=ringSize; ring.style.height=ringSize; ring.style.borderColor='#06b6d4'; ring.style.opacity='0.8'; }
+      if(curTxt && label){ curTxt.textContent=label; curTxt.style.opacity='1'; }
+    });
+    el.addEventListener('mouseleave', function(){
+      if(dot){ dot.style.transform='scale(1)'; dot.style.background='#4f8ef7'; dot.style.boxShadow='0 0 14px #4f8ef7,0 0 28px rgba(79,142,247,.4)'; }
+      if(ring){ ring.style.width='42px'; ring.style.height='42px'; ring.style.borderColor='#4f8ef7'; ring.style.opacity='0.5'; }
+      if(curTxt){ curTxt.style.opacity='0'; }
+    });
   });
-  el.addEventListener('mouseleave', function(){
-    if(dot){ dot.style.transform='scale(1)'; dot.style.background='#4f8ef7'; dot.style.boxShadow='0 0 14px #4f8ef7,0 0 28px rgba(79,142,247,.4)'; }
-    if(ring){ ring.style.width='42px'; ring.style.height='42px'; ring.style.borderColor='#4f8ef7'; ring.style.opacity='0.5'; }
-    if(curTxt){ curTxt.style.opacity='0'; }
-  });
-});
+}
+bindCursorHovers();
 
 // cursorText follow
 document.addEventListener('mousemove', function(e){
   if(curTxt){ curTxt.style.left=(e.clientX+28)+'px'; curTxt.style.top=(e.clientY-10)+'px'; }
 });
 
-// ── PARTICLES ────────────────────────────────────────────────
-var canvas = document.getElementById('particles');
-if(canvas){
-  var ctx = canvas.getContext('2d');
-  function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
+// ══════════════════════════════════════════════════════════
+//  THREE.JS — 3D INTERACTIVE FLOATING GEOMETRY
+//  Replaces the old 2D canvas particle system in #hero
+// ══════════════════════════════════════════════════════════
+(function initThreeScene(){
+  if(typeof THREE === 'undefined') return; // CDN fallback guard
 
-  var pts=[], PCOUNT=90;
-  for(var i=0;i<PCOUNT;i++){
-    pts.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      r: Math.random()*1.8+0.3,
-      dx: (Math.random()-.5)*.45,
-      dy: (Math.random()-.5)*.45,
-      a: Math.random()*.5+.1,
-      phase: Math.random()*Math.PI*2,
-      color: ['79,142,247','6,182,212','139,92,246'][Math.floor(Math.random()*3)]
-    });
+  var canvas = document.getElementById('threeCanvas');
+  if(!canvas) return;
+
+  // ── Renderer ──
+  var renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+    alpha: true       // transparent background — page bg shows through
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0); // fully transparent
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // ── Scene + Camera ──
+  var scene  = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 200);
+  camera.position.set(0, 0, 5);
+
+  // ── Color palette matching CSS tokens ──
+  var C = {
+    blue:   new THREE.Color(0x4f8ef7),
+    cyan:   new THREE.Color(0x06b6d4),
+    violet: new THREE.Color(0x8b5cf6),
+    dim:    new THREE.Color(0x3a3d55)
+  };
+
+  // ── 1. WIREFRAME ICOSAHEDRON (main focal mesh) ──
+  var icoGeo = new THREE.IcosahedronGeometry(1.4, 1);
+  var icoMat = new THREE.MeshBasicMaterial({
+    color: C.blue,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.18
+  });
+  var icoMesh = new THREE.Mesh(icoGeo, icoMat);
+  scene.add(icoMesh);
+
+  // ── 2. INNER SOLID ICOSAHEDRON (subtle glow core) ──
+  var innerGeo = new THREE.IcosahedronGeometry(1.0, 1);
+  var innerMat = new THREE.MeshBasicMaterial({
+    color: C.cyan,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.07
+  });
+  var innerMesh = new THREE.Mesh(innerGeo, innerMat);
+  scene.add(innerMesh);
+
+  // ── 3. OUTER RING (torus) ──
+  var torusGeo = new THREE.TorusGeometry(2.2, 0.012, 8, 80);
+  var torusMat = new THREE.MeshBasicMaterial({
+    color: C.violet,
+    transparent: true,
+    opacity: 0.25
+  });
+  var torusMesh = new THREE.Mesh(torusGeo, torusMat);
+  torusMesh.rotation.x = Math.PI / 4;
+  scene.add(torusMesh);
+
+  // ── 4. FLOATING PARTICLES (point cloud) ──
+  var pCount = 200;
+  var pPositions = new Float32Array(pCount * 3);
+  for(var i=0; i<pCount; i++){
+    var theta = Math.random() * Math.PI * 2;
+    var phi   = Math.acos(2 * Math.random() - 1);
+    var r     = 2 + Math.random() * 3;
+    pPositions[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    pPositions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    pPositions[i*3+2] = r * Math.cos(phi);
   }
+  var pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+  var pMat = new THREE.PointsMaterial({
+    color: C.blue,
+    size: 0.025,
+    transparent: true,
+    opacity: 0.5,
+    sizeAttenuation: true
+  });
+  var pointCloud = new THREE.Points(pGeo, pMat);
+  scene.add(pointCloud);
 
-  var mouseP={x:-999,y:-999};
-  document.addEventListener('mousemove',function(e){mouseP.x=e.clientX;mouseP.y=e.clientY;});
-
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    var now = Date.now()*0.001;
-    pts.forEach(function(p,pi){
-      p.phase+=0.018;
-      var g = 0.5+Math.sin(p.phase)*0.5;
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x<0||p.x>canvas.width) p.dx*=-1;
-      if(p.y<0||p.y>canvas.height) p.dy*=-1;
-      var mdx=p.x-mouseP.x, mdy=p.y-mouseP.y, md=Math.sqrt(mdx*mdx+mdy*mdy);
-      if(md<120){ p.dx+=mdx/md*0.35; p.dy+=mdy/md*0.35; }
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r*(1+g*.35),0,Math.PI*2);
-      ctx.fillStyle='rgba('+p.color+','+(p.a*g)+')';
-      ctx.shadowBlur=8*g; ctx.shadowColor='rgba('+p.color+',.6)';
-      ctx.fill(); ctx.shadowBlur=0;
-      for(var j=pi+1;j<pts.length;j++){
-        var p2=pts[j];
-        var dx=p.x-p2.x,dy=p.y-p2.y,d=Math.sqrt(dx*dx+dy*dy);
-        if(d<140){
-          ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);
-          ctx.strokeStyle='rgba(79,142,247,'+(0.07*(1-d/140))+')';
-          ctx.lineWidth=0.5;ctx.stroke();
-        }
+  // ── 5. CONNECTION LINES between nearby particles ──
+  // We'll use a few static line segments for a "network" feel
+  var linePositions = [];
+  for(var i=0; i<pCount; i++){
+    for(var j=i+1; j<pCount; j++){
+      var ax=pPositions[i*3], ay=pPositions[i*3+1], az=pPositions[i*3+2];
+      var bx=pPositions[j*3], by=pPositions[j*3+1], bz=pPositions[j*3+2];
+      var dist = Math.sqrt((ax-bx)**2+(ay-by)**2+(az-bz)**2);
+      if(dist < 1.2){
+        linePositions.push(ax,ay,az,bx,by,bz);
       }
-    });
-    requestAnimationFrame(draw);
+    }
   }
-  draw();
-}
+  var lGeo = new THREE.BufferGeometry();
+  lGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
+  var lMat = new THREE.LineBasicMaterial({ color: C.blue, transparent: true, opacity: 0.05 });
+  scene.add(new THREE.LineSegments(lGeo, lMat));
+
+  // ── Mouse Inertia ──
+  var mouse  = { x:0, y:0 };
+  var target = { x:0, y:0 };
+  document.addEventListener('mousemove', function(e){
+    mouse.x =  (e.clientX / window.innerWidth  - 0.5) * 2;
+    mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // ── Resize Handler ──
+  window.addEventListener('resize', function(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // ── Animation Loop ──
+  var clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    var t = clock.getElapsedTime();
+
+    // Inertial mouse tracking
+    target.x += (mouse.x - target.x) * 0.04;
+    target.y += (mouse.y - target.y) * 0.04;
+
+    // Main icosahedron: slow auto-rotation + mouse influence
+    icoMesh.rotation.x = t * 0.12  + target.y * 0.6;
+    icoMesh.rotation.y = t * 0.18  + target.x * 0.6;
+
+    // Inner mesh: counter-rotate for layered effect
+    innerMesh.rotation.x = -t * 0.09 + target.y * 0.4;
+    innerMesh.rotation.y = -t * 0.15 + target.x * 0.4;
+
+    // Torus: independent axis
+    torusMesh.rotation.z = t * 0.07;
+    torusMesh.rotation.y = t * 0.04 + target.x * 0.2;
+
+    // Particle cloud: very slow drift
+    pointCloud.rotation.y = t * 0.04;
+    pointCloud.rotation.x = t * 0.02 + target.y * 0.15;
+
+    // Subtle breathing scale on ico
+    var breathe = 1 + Math.sin(t * 0.8) * 0.025;
+    icoMesh.scale.setScalar(breathe);
+
+    // Shift camera slightly toward mouse for parallax depth
+    camera.position.x += (target.x * 0.4 - camera.position.x) * 0.03;
+    camera.position.y += (target.y * 0.3 - camera.position.y) * 0.03;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // ── Position the scene toward hero-right side ──
+  icoMesh.position.set(1.2, 0, 0);
+  innerMesh.position.set(1.2, 0, 0);
+  torusMesh.position.set(1.2, 0, 0);
+  pointCloud.position.set(0.6, 0, 0);
+
+})(); // end initThreeScene
+
+// ══════════════════════════════════════════════════════════
 
 // ── TYPED TEXT ───────────────────────────────────────────────
 var roles=['Full Stack Developer','React.js Developer','Node.js Developer','IoT Enthusiast','Problem Solver','Code Craftsman'];
@@ -175,12 +299,15 @@ document.querySelectorAll('.tilt').forEach(function(card){
     var rx2=((y-r.height/2)/r.height)*-9;
     var ry2=((x-r.width/2)/r.width)*9;
     card.style.transform='perspective(900px) rotateX('+rx2+'deg) rotateY('+ry2+'deg) translateY(-8px) scale(1.025)';
-    // Moving spotlight
     var xPct=(x/r.width)*100, yPct=(y/r.height)*100;
-    card.style.background='radial-gradient(circle at '+xPct+'% '+yPct+'%, rgba(79,142,247,0.07) 0%, transparent 65%)';
+    // Only apply background spotlight if it's NOT a v2 project card (they have their own preview)
+    if(!card.classList.contains('proj-card-v2')){
+      card.style.background='radial-gradient(circle at '+xPct+'% '+yPct+'%, rgba(79,142,247,0.07) 0%, transparent 65%)';
+    }
   });
   card.addEventListener('mouseleave',function(){
-    card.style.transform=''; card.style.background='';
+    card.style.transform='';
+    if(!card.classList.contains('proj-card-v2')) card.style.background='';
   });
 });
 
@@ -196,6 +323,48 @@ document.querySelectorAll('.magnetic').forEach(function(el){
     el.style.transform='';
   });
 });
+
+// ── PROJECT CARD v2: DYNAMIC ACCENT COLOR on hover ───────────
+document.querySelectorAll('.proj-card-v2').forEach(function(card){
+  var accent = card.getAttribute('data-accent') || '#4f8ef7';
+  var hex = accent.replace('#','');
+  var r = parseInt(hex.substring(0,2),16);
+  var g = parseInt(hex.substring(2,4),16);
+  var b = parseInt(hex.substring(4,6),16);
+
+  var glow = card.querySelector('.pcv2-glow');
+  var num  = card.querySelector('.pcv2-num');
+  var stacks = card.querySelectorAll('.pcv2-stack span');
+  var primBtn = card.querySelector('.pcv2-btn--primary');
+
+  card.addEventListener('mouseenter', function(){
+    if(glow) glow.style.background = 'radial-gradient(circle,rgba('+r+','+g+','+b+',.16),transparent 70%)';
+    // Tint primary button with accent
+    if(primBtn){
+      primBtn.style.boxShadow = '0 6px 28px rgba('+r+','+g+','+b+',.45)';
+    }
+    stacks.forEach(function(s){
+      s.style.color = accent;
+      s.style.borderColor = 'rgba('+r+','+g+','+b+',.35)';
+      s.style.background = 'rgba('+r+','+g+','+b+',.08)';
+    });
+  });
+  card.addEventListener('mouseleave', function(){
+    if(primBtn) primBtn.style.boxShadow = '';
+    stacks.forEach(function(s){
+      s.style.color = '';
+      s.style.borderColor = '';
+      s.style.background = '';
+    });
+  });
+
+  // Expand cursor ring specifically on pcv2-btn hover
+  card.querySelectorAll('.pcv2-btn').forEach(function(btn){
+    btn._cursorBound = false; // reset so bindCursorHovers re-binds
+  });
+});
+// Re-bind cursor hovers to pick up v2 buttons
+bindCursorHovers();
 
 // ── SCROLL PROGRESS ──────────────────────────────────────────
 var prog=document.getElementById('scrollProgress');
@@ -228,27 +397,6 @@ document.addEventListener('click',function(e){if(!hbg.contains(e.target)&&!navL.
 
 // ── COUNT UP ─────────────────────────────────────────────────
 var counted=new Set();
-new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if(e.isIntersecting&&!counted.has(e.target)){
-      counted.add(e.target);
-      var el=e.target;
-      var val=parseInt(el.getAttribute('data-val')||0);
-      var suf=el.getAttribute('data-suffix')||'';
-      var start=null;
-      (function step(ts){
-        if(!start)start=ts;
-        var p=Math.min((ts-start)/1800,1);
-        var ease=1-Math.pow(1-p,4);
-        el.textContent=Math.floor(ease*val)+suf;
-        if(p<1)requestAnimationFrame(step);
-      })(performance.now());
-    }
-  });
-},{threshold:.5}).observe.bind(new IntersectionObserver(function(en){
-  en.forEach(function(e){if(e.isIntersecting&&!counted.has(e.target)){counted.add(e.target);var el=e.target;var val=parseInt(el.getAttribute('data-val')||0);var suf=el.getAttribute('data-suffix')||'';var start=null;(function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/1800,1);var ease=1-Math.pow(1-p,4);el.textContent=Math.floor(ease*val)+suf;if(p<1)requestAnimationFrame(step);})(performance.now());}});
-},{threshold:.5}));
-// simpler version:
 var cObs=new IntersectionObserver(function(entries){
   entries.forEach(function(e){
     if(!e.isIntersecting||counted.has(e.target))return;
@@ -311,3 +459,4 @@ document.querySelectorAll('.sk-card').forEach(function(card){
     card.querySelector('.sk-name').style.color='';
   });
 });
+
