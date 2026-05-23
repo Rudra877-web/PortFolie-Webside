@@ -6,6 +6,8 @@
   <title>RP | Full Stack Developer</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- THREE.JS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -47,7 +49,8 @@
 
 <!-- HERO -->
 <section id="hero">
-  <canvas id="particles"></canvas>
+  <!-- THREE.JS replaces old 2D canvas — canvas injected by JS -->
+  <canvas id="threeCanvas"></canvas>
   <div class="hero-noise"></div>
 
   <div class="hero-left">
@@ -81,6 +84,26 @@
         Get In Touch
       </a>
     </div>
+
+
+    <div class="social-connect">
+      <a href="https://github.com/Rudra877-web" target="_blank" class="social-card github-card magnetic">
+        <div class="social-icon">⚡</div>
+        <div class="social-info">
+          <span class="social-title">GitHub</span>
+          <span class="social-sub">View My Projects</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/rudra-panchal-397054323?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="social-card linkedin-card magnetic">
+        <div class="social-icon">💼</div>
+        <div class="social-info">
+          <span class="social-title">LinkedIn</span>
+          <span class="social-sub">Connect With Me</span>
+        </div>
+      </a>
+    </div>
+
   </div>
 
   <div class="hero-right">
@@ -167,10 +190,10 @@
   <div class="skills-grid stagger">
     <div class="sk-card tilt reveal" data-color="#4f8ef7"><div class="sk-icon">🖥️</div><div class="sk-name">Frontend</div><div class="sk-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React.js</span><span>Responsive</span></div><div class="sk-glow"></div></div>
     <div class="sk-card tilt reveal" data-color="#06b6d4"><div class="sk-icon">⚙️</div><div class="sk-name">Backend</div><div class="sk-tags"><span>Node.js</span><span>Express.js</span><span>REST API</span><span>Auth</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#8b5cf6"><div class="sk-icon">🗄️</div><div class="sk-name">Database</div><div class="sk-tags"><span>PostgreSQL</span><span>TypeORM</span><span>MySQL</span><span>RDBMS</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#f59e0b"><div class="sk-icon">💻</div><div class="sk-name">Languages</div><div class="sk-tags"><span>C</span><span>C++</span><span>Python</span><span>Java</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#10b981"><div class="sk-icon">🛠️</div><div class="sk-name">Tools</div><div class="sk-tags"><span>Git</span><span>GitHub</span><span>Postman</span><span>VS Code</span></div><div class="sk-glow"></div></div>
-    <div class="sk-card tilt reveal" data-color="#f43f5e"><div class="sk-icon">🧠</div><div class="sk-name">CS Fundamentals</div><div class="sk-tags"><span>DSA</span><span>RDBMS</span><span>OOP</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#8b5cf6"><div class="sk-icon">🗄️</div><div class="sk-name">Database</div><div class="sk-tags"><span>PostgreSQL</span><span>TypeORM</span><span>SQL</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#f59e0b"><div class="sk-icon">🔧</div><div class="sk-name">Tools</div><div class="sk-tags"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Postman</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#10b981"><div class="sk-icon">📡</div><div class="sk-name">IoT</div><div class="sk-tags"><span>Arduino</span><span>Sensors</span><span>Embedded</span></div><div class="sk-glow"></div></div>
+    <div class="sk-card tilt reveal" data-color="#f43f5e"><div class="sk-icon">🎨</div><div class="sk-name">Design</div><div class="sk-tags"><span>Figma</span><span>UI/UX</span><span>Animations</span></div><div class="sk-glow"></div></div>
   </div>
 </section>
 
@@ -231,43 +254,197 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
+<!-- ══════════════════════════════════════════════════
+     PROJECTS — UPGRADED v2
+     ══════════════════════════════════════════════════ -->
 <section id="software" class="s-dark">
   <div class="s-label reveal"><span></span>05 / PROJECTS</div>
   <h2 class="s-title reveal">SOFTWARE <em>WORK</em><span class="s-dot">.</span></h2>
-  <div class="proj-grid stagger">
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">01</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">College Management System</h3>
-      <p class="proj-desc">Full-stack system — Admin &amp; Student Dashboards, Faculty Management, Courses, Admission &amp; Fee Payment.</p>
-      <div class="proj-stack"><span>React</span><span>Node.js</span><span>Express</span><span>PostgreSQL</span><span>TypeORM</span></div>
-      <div class="proj-footer"><span class="proj-soon">🔗 Coming soon</span></div>
+
+  <div class="proj-grid-v2 stagger">
+
+    <!-- PROJECT 01 – College Management System -->
+    <div class="proj-card-v2 tilt reveal" data-accent="#4f8ef7">
+      <div class="pcv2-glow"></div>
+      <!-- Preview Container -->
+      <div class="pcv2-preview">
+        <div class="pcv2-preview-grid">
+          <div class="ppg-row ppg-header">
+            <div class="ppg-cell ppg-cell--wide ppg-shimmer"></div>
+            <div class="ppg-cell ppg-shimmer"></div>
+            <div class="ppg-cell ppg-shimmer"></div>
+          </div>
+          <div class="ppg-row">
+            <div class="ppg-sidebar">
+              <div class="ppg-nav-item ppg-nav-item--active"></div>
+              <div class="ppg-nav-item"></div>
+              <div class="ppg-nav-item"></div>
+              <div class="ppg-nav-item"></div>
+              <div class="ppg-nav-item"></div>
+            </div>
+            <div class="ppg-body">
+              <div class="ppg-stats-row">
+                <div class="ppg-stat-box"></div>
+                <div class="ppg-stat-box"></div>
+                <div class="ppg-stat-box"></div>
+              </div>
+              <div class="ppg-table-row" style="--w:90%"></div>
+              <div class="ppg-table-row" style="--w:75%"></div>
+              <div class="ppg-table-row" style="--w:85%"></div>
+              <div class="ppg-table-row" style="--w:60%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="pcv2-preview-overlay">
+          <span class="pcv2-preview-label">DASHBOARD PREVIEW</span>
+        </div>
+      </div>
+      <!-- Card Body -->
+      <div class="pcv2-body">
+        <div class="pcv2-num">01</div>
+        <h3 class="pcv2-name">College Management System</h3>
+        <p class="pcv2-desc">Full-stack system — Admin &amp; Student Dashboards, Faculty Management, Courses, Admission &amp; Fee Payment.</p>
+        <div class="pcv2-stack"><span>React</span><span>Node.js</span><span>Express</span><span>PostgreSQL</span><span>TypeORM</span></div>
+        <div class="pcv2-actions">
+          <a href="#" class="pcv2-btn pcv2-btn--primary magnetic" data-cursor="DEMO" title="Coming soon — not deployed yet">
+            <span class="pcv2-btn-icon">🚀</span>
+            <span>Live Demo</span>
+            <span class="pcv2-badge-wip">WIP</span>
+          </a>
+          <a href="#" class="pcv2-btn pcv2-btn--ghost magnetic" data-cursor="CODE" title="Private repo">
+            <span class="pcv2-btn-icon">💻</span>
+            <span>GitHub Code</span>
+            <span class="pcv2-badge-private">Private</span>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">02</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">Portfolio Website</h3>
-      <p class="proj-desc">Responsive personal portfolio with cinematic animations, 3D effects, and dark luxury design.</p>
-      <div class="proj-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
-      <div class="proj-footer"><span class="proj-soon">🔗 Coming soon</span></div>
+
+    <!-- PROJECT 02 – Portfolio Website -->
+    <div class="proj-card-v2 tilt reveal" data-accent="#8b5cf6">
+      <div class="pcv2-glow"></div>
+      <div class="pcv2-preview">
+        <div class="pcv2-preview-port">
+          <div class="ppp-nav"></div>
+          <div class="ppp-hero">
+            <div class="ppp-hero-line ppp-hero-line--big"></div>
+            <div class="ppp-hero-line ppp-hero-line--outline"></div>
+            <div class="ppp-hero-line ppp-hero-line--sub"></div>
+            <div class="ppp-hero-btns">
+              <div class="ppp-btn ppp-btn--solid"></div>
+              <div class="ppp-btn ppp-btn--ghost"></div>
+            </div>
+          </div>
+          <!-- floating orb -->
+          <div class="ppp-orb ppp-orb--blue"></div>
+          <div class="ppp-orb ppp-orb--violet"></div>
+        </div>
+        <div class="pcv2-preview-overlay">
+          <span class="pcv2-preview-label">PORTFOLIO PREVIEW</span>
+        </div>
+      </div>
+      <div class="pcv2-body">
+        <div class="pcv2-num">02</div>
+        <h3 class="pcv2-name">Portfolio Website</h3>
+        <p class="pcv2-desc">Responsive personal portfolio with cinematic animations, 3D effects, and dark luxury design.</p>
+        <div class="pcv2-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Three.js</span></div>
+        <div class="pcv2-actions">
+          <a href="#hero" class="pcv2-btn pcv2-btn--primary magnetic" data-cursor="VIEW">
+            <span class="pcv2-btn-icon">🚀</span>
+            <span>Live Demo</span>
+          </a>
+          <a href="#" class="pcv2-btn pcv2-btn--ghost magnetic" data-cursor="CODE" title="Private repo">
+            <span class="pcv2-btn-icon">💻</span>
+            <span>GitHub Code</span>
+            <span class="pcv2-badge-private">Private</span>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">03</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">Tic-Tac-Toe Game</h3>
-      <p class="proj-desc">Interactive X-O game with clean UI, win detection, and instant replay.</p>
-      <div class="proj-stack"><span>React</span><span>JavaScript</span><span>CSS</span></div>
-      <div class="proj-footer"><a href="https://tic-tak-game-ruby.vercel.app/" target="_blank" class="proj-link">🚀 Live Demo →</a></div>
+
+    <!-- PROJECT 03 – Tic-Tac-Toe -->
+    <div class="proj-card-v2 tilt reveal" data-accent="#06b6d4">
+      <div class="pcv2-glow"></div>
+      <div class="pcv2-preview">
+        <div class="pcv2-preview-game">
+          <div class="pgame-grid">
+            <div class="pgame-cell pgame-cell--x">X</div>
+            <div class="pgame-cell pgame-cell--o">O</div>
+            <div class="pgame-cell pgame-cell--x">X</div>
+            <div class="pgame-cell pgame-cell--o">O</div>
+            <div class="pgame-cell pgame-cell--x pgame-cell--win">X</div>
+            <div class="pgame-cell pgame-cell--o">O</div>
+            <div class="pgame-cell pgame-cell--x pgame-cell--win">X</div>
+            <div class="pgame-cell"></div>
+            <div class="pgame-cell pgame-cell--x pgame-cell--win">X</div>
+          </div>
+          <div class="pgame-status">X Wins! 🎉</div>
+        </div>
+        <div class="pcv2-preview-overlay">
+          <span class="pcv2-preview-label">GAME PREVIEW</span>
+        </div>
+      </div>
+      <div class="pcv2-body">
+        <div class="pcv2-num">03</div>
+        <h3 class="pcv2-name">Tic-Tac-Toe Game</h3>
+        <p class="pcv2-desc">Interactive X-O game with clean UI, win detection, and instant replay.</p>
+        <div class="pcv2-stack"><span>React</span><span>JavaScript</span><span>CSS</span></div>
+        <div class="pcv2-actions">
+          <a href="https://tic-tak-game-ruby.vercel.app/" target="_blank" rel="noopener" class="pcv2-btn pcv2-btn--primary magnetic" data-cursor="PLAY">
+            <span class="pcv2-btn-icon">🚀</span>
+            <span>Live Demo</span>
+          </a>
+          <a href="https://github.com/RudraPanchal" target="_blank" rel="noopener" class="pcv2-btn pcv2-btn--ghost magnetic" data-cursor="CODE">
+            <span class="pcv2-btn-icon">💻</span>
+            <span>GitHub Code</span>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="proj-card tilt reveal">
-      <div class="proj-num">04</div>
-      <div class="proj-glow"></div>
-      <h3 class="proj-name">Money Converter</h3>
-      <p class="proj-desc">Real-time currency converter with multiple international currencies and live calculations.</p>
-      <div class="proj-stack"><span>React</span><span>JavaScript</span><span>API</span></div>
-      <div class="proj-footer"><a href="https://money-converter-rho.vercel.app/" target="_blank" class="proj-link">🚀 Live Demo →</a></div>
+
+    <!-- PROJECT 04 – Money Converter -->
+    <div class="proj-card-v2 tilt reveal" data-accent="#10b981">
+      <div class="pcv2-glow"></div>
+      <div class="pcv2-preview">
+        <div class="pcv2-preview-conv">
+          <div class="pconv-card">
+            <div class="pconv-label">FROM</div>
+            <div class="pconv-flag">🇮🇳</div>
+            <div class="pconv-amount">1,000 INR</div>
+          </div>
+          <div class="pconv-arrow">⇄</div>
+          <div class="pconv-card">
+            <div class="pconv-label">TO</div>
+            <div class="pconv-flag">🇺🇸</div>
+            <div class="pconv-amount">11.98 USD</div>
+          </div>
+          <div class="pconv-rate">1 INR = 0.011982 USD</div>
+          <div class="pconv-bar">
+            <div class="pconv-bar-fill"></div>
+          </div>
+        </div>
+        <div class="pcv2-preview-overlay">
+          <span class="pcv2-preview-label">CONVERTER PREVIEW</span>
+        </div>
+      </div>
+      <div class="pcv2-body">
+        <div class="pcv2-num">04</div>
+        <h3 class="pcv2-name">Money Converter</h3>
+        <p class="pcv2-desc">Real-time currency converter with multiple international currencies and live calculations.</p>
+        <div class="pcv2-stack"><span>React</span><span>JavaScript</span><span>API</span></div>
+        <div class="pcv2-actions">
+          <a href="https://money-converter-rho.vercel.app/" target="_blank" rel="noopener" class="pcv2-btn pcv2-btn--primary magnetic" data-cursor="LAUNCH">
+            <span class="pcv2-btn-icon">🚀</span>
+            <span>Live Demo</span>
+          </a>
+          <a href="https://github.com/RudraPanchal" target="_blank" rel="noopener" class="pcv2-btn pcv2-btn--ghost magnetic" data-cursor="CODE">
+            <span class="pcv2-btn-icon">💻</span>
+            <span>GitHub Code</span>
+          </a>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -322,7 +499,49 @@
     </a>
   </div>
 </section>
+<!-- Certificates Section -->
+<section class="certificates-section" id="certificates">
+  <div class="section-header">
+    <h2>My Certificates</h2>
+    <p>Professional Certifications & Internship Achievements</p>
+  </div>
 
+  <div class="certificates-grid">
+
+    <div class="certificate-card">
+      <img src="certificate1.jpeg" alt="Certificate 1">
+      <div class="certificate-overlay">
+        <h3>Tata Data Visualization</h3>
+        <p>Forage Virtual Experience</p>
+      </div>
+    </div>
+
+    <div class="certificate-card">
+      <img src="certificate2.jpeg" alt="Certificate 2">
+      <div class="certificate-overlay">
+        <h3>Light Finance Internship</h3>
+        <p>Tech Department Internship</p>
+      </div>
+    </div>
+
+    <div class="certificate-card">
+      <img src="certificate3.jpeg" alt="Certificate 3">
+      <div class="certificate-overlay">
+        <h3>Generative AI Studio</h3>
+        <p>Google Cloud & Simplilearn</p>
+      </div>
+    </div>
+
+    <div class="certificate-card">
+      <img src="certificate4.jpeg" alt="Certificate 4">
+      <div class="certificate-overlay">
+        <h3>Professional Exposure</h3>
+        <p>Skillfied Mentor</p>
+      </div>
+    </div>
+
+  </div>
+</section>
 <!-- CONTACT -->
 <section id="contact" class="s-light" style="text-align:center">
   <div class="s-label reveal" style="justify-content:center"><span></span>08 / CONTACT<span></span></div>
@@ -343,5 +562,51 @@
 </footer>
 
 <script src="script.js"></script>
+
+
+<!-- Certificates Section
+<section class="certificates-section" id="certificates">
+  <div class="section-header">
+    <h2>My Certificates</h2>
+    <p>Professional Certifications & Internship Achievements</p>
+  </div>
+
+  <div class="certificates-grid">
+
+    <div class="certificate-card">
+      <img src="certificate1.jpeg" alt="Certificate 1">
+      <div class="certificate-overlay">
+        <h3>Tata Data Visualization</h3>
+        <p>Forage Virtual Experience</p>
+      </div>
+    </div>
+
+    <div class="certificate-card">
+      <img src="certificate2.jpeg" alt="Certificate 2">
+      <div class="certificate-overlay">
+        <h3>Light Finance Internship</h3>
+        <p>Tech Department Internship</p>
+      </div>
+    </div>
+
+    <div class="certificate-card">
+      <img src="certificate3.jpeg" alt="Certificate 3">
+      <div class="certificate-overlay">
+        <h3>Generative AI Studio</h3>
+        <p>Google Cloud & Simplilearn</p>
+      </div>
+    </div>
+
+    <div class="certificate-card">
+      <img src="certificate4.jpeg" alt="Certificate 4">
+      <div class="certificate-overlay">
+        <h3>Professional Exposure</h3>
+        <p>Skillfied Mentor</p>
+      </div>
+    </div>
+
+  </div>
+</section> -->
+
 </body>
 </html>
